@@ -3,13 +3,32 @@
  * No screenshot cloud, network, login, or production endpoint is required.
  */
 const path = require('path');
+const fs = require('fs');
+const http = require('http');
 const assert = require('node:assert/strict');
 const { chromium } = require('playwright-core');
 
 const widths = [320, 360, 375, 390, 414, 540, 600, 720, 768, 820, 1024, 1280];
-const fileUrl = 'file://' + path.resolve(__dirname, '..', 'index.html');
+const root = path.resolve(__dirname, '..');
+const files = new Map([
+  ['/', ['index.html', 'text/html; charset=utf-8']],
+  ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
+  ['/site.js', ['site.js', 'text/javascript; charset=utf-8']],
+  ['/favicon.svg', ['favicon.svg', 'image/svg+xml']]
+]);
 (async function () {
-  const browser = await chromium.launch({
+  const server = http.createServer((request, response) => {
+    const item = files.get(new URL(request.url, 'http://localhost').pathname);
+    if (!item) { response.writeHead(404); return response.end(); }
+    const [file, type] = item;
+    response.writeHead(200, { 'Content-Type': type });
+    response.end(fs.readFileSync(path.join(root, file)));
+  });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  const siteUrl = 'http://127.0.0.1:' + server.address().port + '/';
+  let browser;
+  try {
+    browser = await chromium.launch({
     channel: 'chrome',
     headless: true,
     args: ['--no-sandbox']
@@ -18,9 +37,11 @@ const fileUrl = 'file://' + path.resolve(__dirname, '..', 'index.html');
     for (const width of widths) {
       const page = await browser.newPage({ viewport: { width, height: 860 }, deviceScaleFactor: 1 });
       try {
+        await page.route('https://fonts.googleapis.com/**', r => r.abort());
+        await page.route('https://fonts.gstatic.com/**', r => r.abort());
         const errors = [];
         page.on('pageerror', e => errors.push(e.message));
-        await page.goto(fileUrl, { waitUntil: 'domcontentloaded' });
+        await page.goto(siteUrl, { waitUntil: 'domcontentloaded' });
         await page.locator('.dashboard').waitFor();
         const state = await page.evaluate(() => {
           const rect = (selector) => {
@@ -75,6 +96,7 @@ const fileUrl = 'file://' + path.resolve(__dirname, '..', 'index.html');
       }
     }
   } finally {
-    await browser.close();
+    if (browser) await browser.close();
+    await new Promise(resolve => server.close(resolve));
   }
 })().catch(err => { console.error(err); process.exitCode = 1; });
