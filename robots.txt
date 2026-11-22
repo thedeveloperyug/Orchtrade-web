@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://orchtrade.com/sitemap.xml
