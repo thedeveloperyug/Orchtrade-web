@@ -33,7 +33,6 @@ const files = new Map([
     headless: true,
     args: ['--no-sandbox']
   });
-  try {
     for (const width of widths) {
       const page = await browser.newPage({ viewport: { width, height: 860 }, deviceScaleFactor: 1 });
       try {
