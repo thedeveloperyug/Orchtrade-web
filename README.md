@@ -62,3 +62,21 @@ No package install, JavaScript framework, or build step required.
 `robots.txt` / `sitemap.xml`: search-engine discovery.
 `.github/workflows/pages.yml`: Pages deployment.
 `CNAME`: records the intended hostname; Pages custom-domain setting must also be configured.
+
+## Marketing website → real trading dashboard
+
+The nav **Sign in** link, top-right **Open Dashboard** button, hero **Open Dashboard** button, Free-plan button and footer now point to the **planned** address `https://app.orchtrade.com/`.
+
+**Important:** This URL is **not live just because the website links to it**. The AWS deployment currently uses a CloudFront default domain, and its exact distribution domain name is not recorded in this repository. Before the buttons can work:
+
+1. In AWS CloudFront, locate the existing `orchtrade-pilot` distribution, and copy its assigned `dXXXXXXXXXXXXX.cloudfront.net` hostname. Verify its default CloudFront hostname loads the Flutter login page.
+2. In AWS Certificate Manager in **us-east-1** (N. Virginia), request a public TLS certificate for `app.orchtrade.com`, select **DNS validation**, and add the validation CNAME to the domain's *authoritative* DNS provider (Wix if your domain uses Wix nameservers).
+3. In the **same existing** CloudFront distribution, add **Alternate domain name** `app.orchtrade.com`, attach the validated ACM certificate and keep the current app origin, WebSocket/API behavior, and HTTPS redirect intact. Do not create a replacement distribution or change the broker/MT5 workers.
+4. In the Wix DNS panel (if Wix manages authoritative DNS), add `CNAME` **host** `app` → **value** `dXXXXXXXXXXXXX.cloudfront.net` (replace this placeholder with the real hostname). This is separate from the root `orchtrade.com` A records, which continue pointing to GitHub Pages.
+5. Verify `https://app.orchtrade.com/` loads the login page, user sign-in works and the network requests/WebSockets remain same-origin (the deployed app uses `ORCHTRADE_API_URL=auto`). Then check all marketing CTA links.
+
+If you need a working link **before** DNS/certificate validation, temporarily replace each `https://app.orchtrade.com/` with the verified `https://dXXXXXXXXXXXXX.cloudfront.net/` URL in `index.html` and push. Do not use `localhost:8080`, an EC2 private IP, or a local network address.
+
+The marketing site is an ordinary public web page and must not handle MT5 broker credentials or dashboard sessions.
+
+Documentation: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cnames-and-https-procedures.html
