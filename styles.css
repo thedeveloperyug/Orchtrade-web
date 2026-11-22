@@ -6,3 +6,185 @@
 @media(max-width:720px){.container{width:min(100% - 34px,590px)}.nav-shell{height:73px}.brand{font-size:23px}.menu-button{display:block}.desktop-cta{display:none}.main-nav{position:absolute;display:none;top:73px;left:0;right:0;background:#f5f6f9;padding:19px 25px 25px;box-shadow:0 15px 20px #dfe1e999;flex-direction:column;align-items:stretch;gap:0}.main-nav.open{display:flex}.main-nav a{padding:10px 4px;font-size:14px}.section-pad{padding-block:78px}.hero{padding-top:55px;padding-bottom:55px}.hero h1{letter-spacing:-2.5px}.hero-lead{font-size:14px}.hero-actions{flex-wrap:wrap;gap:12px}.hero-footnotes{gap:9px;font-size:10px}.hero-visual{min-height:360px;overflow:visible}.dashboard{width:646px;transform:scale(.57);transform-origin:50% 50%;flex:none;margin:0}.dashboard:hover{transform:scale(.57)}.orbit-one{width:390px;height:390px;right:0;top:0}.orbit-two{display:none}.float-chip{transform:scale(.79)}.float-chip-top{top:16px;right:-5px}.float-chip-bottom{bottom:20px;left:-8px}.illustration-note{bottom:-12px;left:0;right:0;text-align:center;font-size:8px}.trust-strip{gap:16px}.trust-strip div{font-size:11px}.feature-grid,.pricing-grid,.process-layout,.faq-layout,.footer-grid{grid-template-columns:1fr}.feature-grid{margin-top:35px;gap:20px}.feature-card{min-height:275px}.process{padding-top:25px}.steps{gap:17px}.price-card.highlighted{transform:none}.price-card{min-height:0}.pricing-grid{gap:28px}.faq{padding-top:55px}.contact-section{padding-top:15px;padding-bottom:70px}.contact-panel{padding:50px 20px}.footer-grid{grid-template-columns:1fr 1fr;gap:30px}.footer-grid>div:first-child{grid-column:span 2}.footer-bottom{flex-direction:column;gap:5px;margin-top:35px}.section-heading h2{letter-spacing:-2px}.section-heading p{font-size:13px}}
 @media(max-width:420px){.hero-visual{min-height:315px}.dashboard{transform:scale(.48)}.dashboard:hover{transform:scale(.48)}.float-chip-top{top:7px;right:-13px}.float-chip-bottom{bottom:2px}.hero h1{font-size:40px}.hero-actions .btn{width:100%}.hero-footnotes{flex-direction:column}.step{padding:18px;gap:13px}.step-deco{display:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
+
+/* Responsive refresh: real content reflow replaces the miniature scaled mockup.
+   Tested viewport targets: 320, 360, 375, 390, 414, 540, 600, 720,
+   768, 820, 1024 and 1280 CSS pixels. */
+@media (max-width: 1050px) {
+  .nav-shell { gap: 14px; }
+  .nav-actions { display: flex; align-items: center; gap: 14px; }
+  .menu-button { display: block; flex: 0 0 42px; }
+  .main-nav {
+    position: absolute;
+    display: none;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: calc(100dvh - 73px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 16px max(22px, calc((100vw - 1180px) / 2)) 22px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: #f5f6f9;
+    border-bottom: 1px solid #e6e6ee;
+    box-shadow: 0 18px 30px #ced1df66;
+  }
+  .main-nav.open { display: flex; }
+  .main-nav a {
+    display: flex;
+    align-items: center;
+    min-height: 47px;
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+  .main-nav a:hover, .main-nav a:focus-visible { background: #ebe9f8; }
+  .desktop-cta { display: inline-flex; }
+}
+
+@media (min-width: 721px) and (max-width: 1050px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 830px;
+    margin-inline: auto;
+    gap: 24px;
+  }
+  .price-card:last-child { grid-column: 1 / -1; width: min(100%, 405px); justify-self: center; }
+  .price-card { padding: 30px 27px; }
+  .price-card.highlighted { transform: none; }
+  .hero-visual { max-width: min(720px, 100%); }
+}
+
+@media (max-width: 720px) {
+  .container { width: calc(100% - 36px); }
+  .nav-shell { height: 72px; }
+  .main-nav { top: 100%; }
+  .hero-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    gap: 24px;
+  }
+  .hero-copy { max-width: 590px; width: 100%; }
+  .hero h1 { font-size: clamp(36px, 8.4vw, 53px); letter-spacing: -2.1px; }
+  .hero-lead { font-size: 14px; line-height: 1.7; }
+  .hero-actions { margin-top: 24px; }
+  .hero-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+    width: 100%;
+    max-width: 610px;
+    min-height: 0;
+    padding: 18px 0 0;
+    overflow: visible;
+  }
+  .dashboard, .dashboard:hover {
+    width: 100%;
+    max-width: none;
+    min-height: 0;
+    margin: 0;
+    flex: none;
+    transform: none;
+    border-width: 5px;
+    border-radius: 19px;
+    box-shadow: 10px 12px 24px #d7dae6, -9px -9px 24px #ffffff;
+  }
+  .dash-sidebar { width: 48px; gap: 7px; padding: 12px 6px; }
+  .dash-side-icon { width: 32px; height: 32px; }
+  .dash-content { padding: 15px; }
+  .dash-heading h2 { font-size: clamp(15px, 3.3vw, 20px); }
+  .dash-heading small { font-size: 8px; }
+  .dash-pills { flex-wrap: wrap; gap: 6px 10px; }
+  .metric-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .mini-metric { min-width: 0; padding: 12px; }
+  .mini-metric.quiet { display: none; }
+  .mini-metric strong { font-size: clamp(15px, 3.5vw, 21px); }
+  .mini-metric small, .uptext, .muted-text { font-size: 10px; }
+  .workspace-row { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .chart-panel, .watch-panel { padding: 13px; }
+  .chart-wrap { height: 184px; padding-top: 12px; }
+  .panel-top small { font-size: 8px; }
+  .panel-top strong { font-size: 12px; }
+  .watch-item { gap: 10px; }
+  .watch-item strong { font-size: 12px; }
+  .watch-item small { font-size: 10px; }
+  .watch-price { font-size: 12px; }
+  .asset-icon { width: 34px; height: 34px; }
+  .dash-bottom { flex-wrap: wrap; gap: 5px; }
+  .dash-bottom strong { font-size: 11px; }
+  .dash-bottom small { font-size: 10px; }
+  .dash-bottom .insight-link { font-size: 10px; }
+  .float-chip { display: none; }
+  .orbit-one { width: 280px; height: 280px; top: -10px; right: -8px; }
+  .illustration-note {
+    position: static;
+    display: block;
+    margin: 0;
+    font-size: 10px;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .trust-strip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    padding-block: 23px;
+  }
+  .trust-strip > span { grid-column: 1 / -1; width: auto; }
+  .trust-strip div { white-space: normal; text-align: center; line-height: 1.4; }
+  .feature-card { min-height: 0; padding: 24px; }
+  .pricing-grid { grid-template-columns: 1fr; width: 100%; max-width: 510px; margin-inline: auto; }
+  .price-card, .price-card.highlighted { width: 100%; max-width: none; }
+  .price-card .btn { white-space: normal; text-align: center; }
+  .step { align-items: flex-start; }
+  .section-heading h2 { font-size: clamp(33px, 7.8vw, 46px); }
+  .contact-panel h2 { font-size: clamp(33px, 7.8vw, 46px); }
+}
+
+@media (max-width: 560px) {
+  .desktop-cta { display: none; }
+  .dash-sidebar, .dash-actions { display: none; }
+  .dash-content { padding: 12px; }
+  .dash-heading h2 { font-size: clamp(15px, 4.3vw, 19px); }
+  .dash-content .chart-wrap { height: 164px; }
+  .dash-bottom small { display: block; margin-left: 0; }
+  .footer-grid { column-gap: 20px; }
+}
+
+@media (max-width: 420px) {
+  .container { width: calc(100% - 30px); }
+  .hero h1 { font-size: clamp(34px, 9.6vw, 40px); letter-spacing: -1.75px; }
+  .hero-actions .btn { min-width: 0; }
+  .dashboard, .dashboard:hover { transform: none; }
+  .hero-visual { min-height: 0; }
+  .mini-metric { padding: 10px 8px; }
+  .mini-metric strong { font-size: clamp(13px, 4vw, 17px); }
+  .mini-metric .uptext { font-size: 9px; }
+  .chart-panel, .watch-panel { padding: 10px; }
+  .dash-content .chart-wrap { height: 150px; }
+  .dash-bottom { align-items: flex-start; }
+  .feature-card { padding: 22px; }
+  .step-deco { display: none; }
+  .price-card { padding: 28px 22px; }
+  .faq-items details { padding: 19px; }
+  .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer-grid > div { min-width: 0; }
+  .footer-grid > div a { overflow-wrap: anywhere; }
+}
+
+@media (max-width: 340px) {
+  .brand { font-size: 21px; gap: 8px; }
+  .brand-mark { width: 32px; height: 32px; }
+  .hero h1 { font-size: 33px; }
+  .dash-pills { margin-block: 10px; }
+  .mini-metric strong { font-size: 13px; }
+  .trust-strip div { font-size: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard, .dashboard:hover, .feature-card { transform: none; }
+}

@@ -80,3 +80,23 @@ If you need a working link **before** DNS/certificate validation, temporarily re
 The marketing site is an ordinary public web page and must not handle MT5 broker credentials or dashboard sessions.
 
 Documentation: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cnames-and-https-procedures.html
+
+## Phone and tablet QA
+
+The page reflows at 1050px (hamburger navigation), 720px (single-column
+responsive dashboard preview, features and plans), 560px (simplified dashboard
+chrome) and 420/340px (compact layout). The dashboard is no longer a scaled
+646px screenshot on mobile: charts, account cards and watchlist get their own
+legible rows. The design remains light neumorphic; the marketing website
+does not change the Flutter app.
+
+The Pages workflow runs a headless Chrome regression sweep across twelve
+viewport widths from 320px to 1280px. Tests check horizontal overflow, card
+widths, mobile dashboard bounds, menu accessibility, and pricing toggles.
+Run the same suite locally using:
+```sh
+npm install --no-save playwright-core@1.56.1
+node tests/responsive.cjs
+```
+Chrome must be installed. The workflow uploads only static public assets,
+not the test dependencies.

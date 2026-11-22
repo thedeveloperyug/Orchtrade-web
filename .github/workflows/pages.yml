@@ -27,12 +27,20 @@ jobs:
           test -s CNAME
           grep -q '<html lang="en">' index.html
           grep -qx 'orchtrade.com' CNAME
+      - name: Responsive browser checks (phones, tablets, desktop)
+        run: |
+          npm install --prefix /tmp/orchtrade-responsive-ci --no-save --no-audit --no-fund playwright-core@1.56.1
+          NODE_PATH=/tmp/orchtrade-responsive-ci/node_modules node tests/responsive.cjs
+      - name: Stage only static public assets
+        run: |
+          mkdir -p dist
+          cp index.html styles.css site.js favicon.svg CNAME robots.txt sitemap.xml .nojekyll dist/
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: dist
       - name: Deploy to Pages
         id: deployment
         uses: actions/deploy-pages@v4
