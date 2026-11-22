@@ -55,6 +55,7 @@
   .price-card { padding: 30px 27px; }
   .price-card.highlighted { transform: none; }
   .hero-visual { max-width: min(720px, 100%); }
+  .orbit-one { right: 0; max-width: 100%; }
 }
 
 @media (max-width: 720px) {
