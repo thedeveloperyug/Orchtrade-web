@@ -88,6 +88,16 @@ const files = new Map([
         const annual = page.locator('[data-period="annual"]');
         await annual.click();
         assert.equal((await page.locator('[data-monthly="$12.99"]').textContent()).trim(), '$155.88');
+        assert.equal(await page.getByRole('link', { name: 'Choose Pro ↗' }).getAttribute('href'),
+          'https://app.orchtrade.com/?plan=pro&period=annual');
+        assert.equal(await page.getByRole('link', { name: 'Choose Advanced ↗' }).getAttribute('href'),
+          'https://app.orchtrade.com/?plan=advanced&period=annual');
+        assert.equal(await page.getByRole('link', { name: 'Open free dashboard ↗' }).getAttribute('href'),
+          'https://app.orchtrade.com/');
+        assert.equal((await page.locator('[data-monthly="$0"]').textContent()).trim(), '$0');
+        await page.locator('[data-period="monthly"]').click();
+        assert.equal(await page.getByRole('link', { name: 'Choose Pro ↗' }).getAttribute('href'),
+          'https://app.orchtrade.com/?plan=pro&period=monthly');
         assert.deepEqual(errors, [], 'Browser JS errors at ' + width);
         console.log('PASS ' + width + 'px — nav, pricing, dashboard, no horizontal overflow');
       } finally {
