@@ -52,12 +52,10 @@
       document.querySelectorAll('[data-period-label]').forEach(function (label) {
         label.textContent = annual ? '/ year' : '/ month';
       });
-      document.querySelectorAll('[data-annual-note]').forEach(function (note) {
-        if (note.closest('.price-card').querySelector('h3').textContent === 'Free') {
-          note.textContent = 'Core tools, no AI features';
-        } else {
-          note.textContent = annual ? 'USD · Billed yearly · Checkout coming soon' : 'USD · Checkout coming soon';
-        }
+      document.querySelectorAll('[data-checkout-link]').forEach(function (link) {
+        var checkout = new URL(link.href);
+        checkout.searchParams.set('period', button.dataset.period);
+        link.href = checkout.href;
       });
     });
   });
