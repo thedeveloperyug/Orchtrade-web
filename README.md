@@ -113,3 +113,15 @@ publish the registered legal operator, business address, grievance details, a
 separate Privacy Policy, a clear Refund/Cancellation Policy, and any applicable
 regulatory requirements. This publication is a draft disclosure, not proof of
 legal review or authorization. Recheck wording whenever billing behavior changes.
+
+## Dark theme and product showcase
+
+The marketing site uses a dark neumorphic palette and native browser scrolling.
+Six lightweight SVG previews are bundled, based on the provided workspace designs.
+To use the actual demo screenshots, add the six optimized WebP files to
+`assets/showcase/`: dashboard.webp, market-charts.webp, backtests.webp,
+ai-insights.webp, journal.webp and full-chart.webp. Pages builds a manifest of
+available WebP images and the showcase automatically prefers them. Until they
+are present, clearly labeled SVG illustrations are used. Autoplay pauses offscreen
+and on hidden tabs; reduced-motion preferences disable automatic motion. The
+browser test suite exercises carousel navigation and retains prior checkout checks.

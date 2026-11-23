@@ -21,7 +21,17 @@ const files = new Map([
 (async function () {
   const server = http.createServer((request, response) => {
     const item = files.get(new URL(request.url, 'http://localhost').pathname);
-    if (!item) { response.writeHead(404); return response.end(); }
+    if (!item) {
+      const urlPath = new URL(request.url, 'http://localhost').pathname;
+      if (/^\/assets\/showcase\/[a-z-]+\.(svg|webp|json)$/.test(urlPath)) {
+        const asset = path.join(root, urlPath);
+        if (fs.existsSync(asset)) {
+          response.writeHead(200, { 'Content-Type': urlPath.endsWith('.svg') ? 'image/svg+xml' : urlPath.endsWith('.webp') ? 'image/webp' : 'application/json' });
+          return response.end(fs.readFileSync(asset));
+        }
+      }
+      response.writeHead(404); return response.end();
+    }
     const [file, type] = item;
     response.writeHead(200, { 'Content-Type': type });
     response.end(fs.readFileSync(path.join(root, file)));
@@ -87,6 +97,16 @@ const files = new Map([
           assert.equal(state.menuDisplay, 'none', 'Menu button should not show on desktop at ' + width);
           assert.equal(state.navDisplay, 'flex', 'Desktop nav hidden at ' + width);
         }
+        const showcase = page.locator('[data-showcase]');
+        assert.equal(await showcase.locator('[data-screen]').count(), 6);
+        await showcase.locator('[data-screen="5"]').click();
+        assert.equal(await showcase.locator('[data-screen="5"]').getAttribute('aria-pressed'), 'true');
+        assert.equal(await showcase.locator('[data-slide="5"]').getAttribute('aria-hidden'), 'false');
+        await showcase.locator('[data-slide="5"] img').evaluate(img => img.decode());
+        await showcase.locator('[data-showcase-next]').click();
+        assert.equal(await showcase.locator('[data-screen="0"]').getAttribute('aria-pressed'), 'true');
+        assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.topbar')).backdropFilter), 'none');
+        assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
         const annual = page.locator('[data-period="annual"]');
         await annual.click();
         assert.equal((await page.locator('[data-monthly="$12.99"]').textContent()).trim(), '$155.88');

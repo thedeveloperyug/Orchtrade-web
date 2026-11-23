@@ -29,6 +29,8 @@ jobs:
           grep -qx 'orchtrade.com' CNAME
           test -s terms-and-conditions/index.html
           test -s disclaimer/index.html
+          test -s assets/showcase/dashboard.svg
+          test -s assets/showcase/full-chart.svg
           grep -q 'Terms &amp; Conditions' index.html
           grep -q 'Trading Risk &amp; AI Disclaimer' index.html
       - name: Responsive browser checks (phones, tablets, desktop)
@@ -39,6 +41,14 @@ jobs:
         run: |
           mkdir -p dist
           cp index.html styles.css site.js favicon.svg CNAME robots.txt sitemap.xml .nojekyll dist/
+          cp -R assets dist/
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('dist/assets/showcase')
+          manifest = {'/assets/showcase/' + p.name: True for p in root.glob('*.webp')}
+          (root / 'manifest.json').write_text(json.dumps(manifest))
+          PY
           mkdir -p dist/terms-and-conditions dist/disclaimer
           cp terms-and-conditions/index.html dist/terms-and-conditions/index.html
           cp disclaimer/index.html dist/disclaimer/index.html
