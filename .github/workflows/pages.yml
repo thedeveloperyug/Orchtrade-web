@@ -31,6 +31,8 @@ jobs:
           test -s assets/showcase/full-chart.svg
           grep -q 'Terms &amp; Conditions' index.html
           grep -q 'Trading Risk &amp; AI Disclaimer' index.html
+      - name: Validate SEO metadata, sitemap and public links
+        run: python3 tests/seo.py
       - name: Responsive browser checks (phones, tablets, desktop)
         run: |
           npm install --prefix /tmp/orchtrade-responsive-ci --no-save --no-audit --no-fund playwright-core@1.56.1
@@ -38,8 +40,9 @@ jobs:
       - name: Stage only static public assets
         run: |
           mkdir -p dist
-          cp index.html styles.css site.js favicon.svg CNAME robots.txt sitemap.xml .nojekyll dist/
+          cp index.html styles.css site.js favicon.svg CNAME robots.txt sitemap.xml llms.txt .nojekyll dist/
           cp -R assets dist/
+          cp -R mt5-account-monitoring trading-journal ai-backtesting ai-trading-analysis forex-market-charts dist/
           python3 - <<'PY'
           import json
           from pathlib import Path

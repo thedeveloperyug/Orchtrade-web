@@ -125,3 +125,7 @@ available WebP images and the showcase automatically prefers them. Until they
 are present, clearly labeled SVG illustrations are used. Autoplay pauses offscreen
 and on hidden tabs; reduced-motion preferences disable automatic motion. The
 browser test suite exercises carousel navigation and retains prior checkout checks.
+
+## Search discoverability
+
+Five public product guides, homepage entity markup, individual page metadata, canonical links and an expanded sitemap are included. Run `python3 tests/seo.py` before publication. `llms.txt` is optional documentation for tools that use it, not a Google ranking mechanism. Verify Search Console ownership and submit sitemap.xml; use URL Inspection for indexability. Cloudflare bot policies and live indexing must be checked separately. Keep pricing and product facts synchronized with the application, avoid fabricated reviews and publish only useful, accurate content. No ranking or AI citation is guaranteed.

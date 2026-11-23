@@ -1,0 +1,22 @@
+# OrchTrade
+
+> OrchTrade is a read-only MT5 trading analytics and research platform. It does not place orders, custody funds or guarantee financial returns.
+
+OrchTrade supports connected MetaTrader 5 account monitoring, portfolio analytics, open trades, trade journaling and economic news. AI Insights and Backtests have plan-dependent trials and access. Advanced includes Market Charts, Signals (watch-only), AI strategy research and AI Journal Coach. Current USD monthly offer prices are Free $0, Pro $12, Advanced $25. Free supports one MT5 account; Pro and Advanced support up to two. Check the website and dashboard for current entitlements and checkout prices. No fixed sync latency is guaranteed. AI output is research, not investment advice.
+
+## Product and pricing
+- [Official website and pricing](https://orchtrade.com/#pricing): current plans and features.
+- [Dashboard](https://app.orchtrade.com/): account sign-in; public product information is on the marketing website.
+
+## Product guides
+- [MT5 Account Monitoring & Portfolio Tracker](https://orchtrade.com/mt5-account-monitoring/): Monitor MetaTrader 5 equity, balance, floating P&L, open trades and account performance with OrchTrade's read-only portfolio dashboard.
+- [MT5 Trading Journal & Trade Review](https://orchtrade.com/trading-journal/): Use an MT5 trading journal to review trade history, record setups, emotions, risk-reward and execution checklists. AI Journal Coach is available on Advanced.
+- [AI Strategy Backtesting for Forex & MT5](https://orchtrade.com/ai-backtesting/): Explore historical strategy backtesting, trade replay, CSV data import and AI-assisted strategy research with OrchTrade. Simulated results are not forecasts.
+- [AI Trading Analysis & Portfolio Insights](https://orchtrade.com/ai-trading-analysis/): Research MT5 portfolio performance, AI-generated watch-only signals, trade setups and journal reviews with OrchTrade. No automatic execution or guaranteed returns.
+- [Forex & Gold Charts with AI Scan](https://orchtrade.com/forex-market-charts/): Explore OrchTrade's broker-sourced MT5 candlestick charts, multi-chart monitoring, timeframe switching and AI trade setup research on Advanced.
+
+## Legal
+- [Terms and Conditions](https://orchtrade.com/terms-and-conditions/)
+- [Risk and AI Disclaimer](https://orchtrade.com/disclaimer/)
+
+This optional plain-text site guide summarizes public information; it is not a guarantee of indexing or AI citations.
