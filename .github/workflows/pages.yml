@@ -5,16 +5,14 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 concurrency:
   group: github-pages
   cancel-in-progress: true
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -58,6 +56,32 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+          retention-days: 3
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Verify Pages artifact is visible to the Actions API
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          # Upload finalization can precede visibility in the REST API.
+          # Only publish after the artifact for this exact run is discoverable.
+          for attempt in $(seq 1 24); do
+            count=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts" --jq '[.artifacts[] | select(.name == "github-pages" and .expired == false)] | length' || true)
+            if [[ "$count" == "1" ]]; then
+              echo "Pages artifact is visible for run $GITHUB_RUN_ID."
+              exit 0
+            fi
+            echo "Artifact metadata not ready (attempt $attempt/24)."
+            if [[ "$attempt" != "24" ]]; then sleep 5; fi
+          done
+          echo "::error::Expected exactly one non-expired github-pages artifact for the current run."
+          exit 1
       - name: Deploy to Pages
         id: deployment
         uses: actions/deploy-pages@v4
