@@ -14,7 +14,9 @@ const files = new Map([
   ['/', ['index.html', 'text/html; charset=utf-8']],
   ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
   ['/site.js', ['site.js', 'text/javascript; charset=utf-8']],
-  ['/favicon.svg', ['favicon.svg', 'image/svg+xml']]
+  ['/favicon.svg', ['favicon.svg', 'image/svg+xml']],
+  ['/terms-and-conditions/', ['terms-and-conditions/index.html', 'text/html; charset=utf-8']],
+  ['/disclaimer/', ['disclaimer/index.html', 'text/html; charset=utf-8']]
 ]);
 (async function () {
   const server = http.createServer((request, response) => {
@@ -102,6 +104,25 @@ const files = new Map([
         console.log('PASS ' + width + 'px — nav, pricing, dashboard, no horizontal overflow');
       } finally {
         await page.close();
+      }
+    }
+    for (const width of [320, 390, 768, 1024]) {
+      for (const slug of ['terms-and-conditions', 'disclaimer']) {
+        const page = await browser.newPage({ viewport: { width, height: 860 }, deviceScaleFactor: 1 });
+        try {
+          await page.goto(siteUrl + slug + '/', { waitUntil: 'domcontentloaded' });
+          const layout = await page.evaluate(() => ({
+            scrollWidth: document.documentElement.scrollWidth,
+            viewport: innerWidth,
+            heading: document.querySelector('h1')?.textContent,
+            sections: document.querySelectorAll('.legal-content section').length
+          }));
+          assert.ok(layout.heading && layout.sections >= 10, 'Legal content missing: ' + slug);
+          assert.ok(layout.scrollWidth <= width + 1, 'Legal horizontal overflow: ' + slug + ' ' + width + 'px');
+          console.log('PASS ' + slug + ' ' + width + 'px');
+        } finally {
+          await page.close();
+        }
       }
     }
   } finally {

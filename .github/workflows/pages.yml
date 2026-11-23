@@ -27,6 +27,10 @@ jobs:
           test -s CNAME
           grep -q '<html lang="en">' index.html
           grep -qx 'orchtrade.com' CNAME
+          test -s terms-and-conditions/index.html
+          test -s disclaimer/index.html
+          grep -q 'Terms &amp; Conditions' index.html
+          grep -q 'Trading Risk &amp; AI Disclaimer' index.html
       - name: Responsive browser checks (phones, tablets, desktop)
         run: |
           npm install --prefix /tmp/orchtrade-responsive-ci --no-save --no-audit --no-fund playwright-core@1.56.1
@@ -35,6 +39,9 @@ jobs:
         run: |
           mkdir -p dist
           cp index.html styles.css site.js favicon.svg CNAME robots.txt sitemap.xml .nojekyll dist/
+          mkdir -p dist/terms-and-conditions dist/disclaimer
+          cp terms-and-conditions/index.html dist/terms-and-conditions/index.html
+          cp disclaimer/index.html dist/disclaimer/index.html
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload website

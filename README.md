@@ -100,3 +100,16 @@ node tests/responsive.cjs
 ```
 Chrome must be installed. The workflow uploads only static public assets,
 not the test dependencies.
+
+## Legal pages
+
+The site now publishes `/terms-and-conditions/` and `/disclaimer/` as
+responsive, styled static routes linked in the bottom footer. The GitHub
+Pages pipeline includes both route files and its Chrome viewport suite covers
+legal pages at phone/tablet widths.
+
+**Legal sign-off still required before wider commercial launch:** verify and
+publish the registered legal operator, business address, grievance details, a
+separate Privacy Policy, a clear Refund/Cancellation Policy, and any applicable
+regulatory requirements. This publication is a draft disclosure, not proof of
+legal review or authorization. Recheck wording whenever billing behavior changes.
