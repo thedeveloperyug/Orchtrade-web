@@ -321,3 +321,7 @@ body{background:var(--bg);color:var(--ink)}
 .plan-table td[data-access="trial"]{font-weight:700;color:#e4c68f}
 .plan-table tbody tr:last-child>*{border-bottom:0}
 @media(max-width:560px){.plan-comparison{margin-top:28px;border-radius:17px}.plan-table{font-size:11px}.plan-table .plan-feature-col{width:43%}.plan-table th,.plan-table td{padding:11px 3px}.plan-table thead th{font-size:10px}.compare-intro,.compare-note{font-size:11px}}
+
+/* Offer prices and plan limits */
+.price-line{flex-wrap:wrap;gap:3px 8px;align-items:baseline}.price-line .original-price{font-size:14px;color:#a0adc4;text-decoration-thickness:1px;white-space:nowrap}.price-line [data-period-label]{white-space:nowrap}.price-card .billing-hint{display:flex;align-items:center;gap:7px;flex-wrap:wrap;min-height:25px}.offer-tag{display:inline-block;color:#a0e5d1;background:#213d3e;border:1px solid #345b57;border-radius:7px;padding:3px 7px;font-weight:800;font-size:10px;line-height:1.4}.plan-table td[data-access="limit"]{font-weight:800;color:var(--ink)}
+@media(max-width:420px){.price-line .original-price{font-size:13px}}

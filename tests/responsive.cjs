@@ -108,8 +108,11 @@ const files = new Map([
         assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.topbar')).backdropFilter), 'none');
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
         const comparison = page.locator('.plan-table');
-        assert.equal(await comparison.locator('tbody tr').count(), 13);
-        const access = async name => comparison.locator('tbody tr').filter({has:page.getByRole('rowheader',{name,exact:true})}).locator('td').evaluateAll(cells => cells.map(cell => cell.dataset.access === 'trial' ? cell.textContent.trim() : cell.dataset.access));
+        assert.equal(await comparison.locator('tbody tr').count(), 17);
+        const access = async name => comparison.locator('tbody tr').filter({has:page.getByRole('rowheader',{name,exact:true})}).locator('td').evaluateAll(cells => cells.map(cell => ['trial','limit'].includes(cell.dataset.access) ? cell.textContent.trim() : cell.dataset.access));
+        assert.deepEqual(await access('Connected MT5 accounts'), ['1','2','2']);
+        assert.deepEqual(await access('Priority customer care'), ['excluded','included','included']);
+        for(const name of ['Real-time charts with AI scan','Ultra-low-latency sync']) assert.deepEqual(await access(name), ['excluded','excluded','included']);
         assert.deepEqual(await access('Backtests'), ['1 day','3 days','included']);
         assert.deepEqual(await access('AI Insights'), ['1 day','included','included']);
         assert.deepEqual(await access('Economic News'), ['included','included','included']);
@@ -119,9 +122,16 @@ const files = new Map([
         assert.equal(await comparison.getByRole('rowheader',{name:'Profile',exact:true}).count(),0);
         assert.equal(await comparison.getByRole('rowheader',{name:'Billing',exact:true}).count(),0);
         assert.ok(await comparison.evaluate(e=>{const r=e.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth+1;}));
+        for(const [offer,original] of [['$12','$20'],['$25','$32']]) {
+          assert.equal((await page.locator('strong[data-monthly="'+offer+'"]').textContent()).trim(),offer);
+          assert.equal((await page.locator('del[data-monthly="'+original+'"]').textContent()).trim(),original);
+        }
         const annual = page.locator('[data-period="annual"]');
         await annual.click();
-        assert.equal((await page.locator('[data-monthly="$12.99"]').textContent()).trim(), '$155.88');
+        assert.equal((await page.locator('strong[data-monthly="$12"]').textContent()).trim(), '$144');
+        assert.equal((await page.locator('del[data-monthly="$20"]').textContent()).trim(), '$240');
+        assert.equal((await page.locator('strong[data-monthly="$25"]').textContent()).trim(), '$300');
+        assert.equal((await page.locator('del[data-monthly="$32"]').textContent()).trim(), '$384');
         assert.equal(await page.getByRole('link', { name: 'Choose Pro ↗' }).getAttribute('href'),
           'https://app.orchtrade.com/?plan=pro&period=annual');
         assert.equal(await page.getByRole('link', { name: 'Choose Advanced ↗' }).getAttribute('href'),
@@ -130,6 +140,10 @@ const files = new Map([
           'https://app.orchtrade.com/');
         assert.equal((await page.locator('[data-monthly="$0"]').textContent()).trim(), '$0');
         await page.locator('[data-period="monthly"]').click();
+        assert.equal((await page.locator('strong[data-monthly="$12"]').textContent()).trim(),'$12');
+        assert.equal((await page.locator('del[data-monthly="$20"]').textContent()).trim(),'$20');
+        assert.equal((await page.locator('strong[data-monthly="$25"]').textContent()).trim(),'$25');
+        assert.equal((await page.locator('del[data-monthly="$32"]').textContent()).trim(),'$32');
         assert.equal(await page.getByRole('link', { name: 'Choose Pro ↗' }).getAttribute('href'),
           'https://app.orchtrade.com/?plan=pro&period=monthly');
         assert.deepEqual(errors, [], 'Browser JS errors at ' + width);
