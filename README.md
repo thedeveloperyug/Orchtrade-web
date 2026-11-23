@@ -49,7 +49,7 @@ No package install, JavaScript framework, or build step required.
 - Edit `index.html` for copy, feature lists, prices, SEO metadata and contact email.
 - Edit `styles.css` for colors, neumorphic shadows and layout.
 - Edit `site.js` for the mobile menu and monthly/yearly pricing toggle.
-- Early-access links currently open an email to `yogesh.pandey@orchstring.com`; change that to your dedicated OrchTrade email or working app/signup URL when ready.
+- Early-access links currently open an email to `orchstringsupport@gmail.com`; change that to your dedicated OrchTrade email or working app/signup URL when ready.
 - Edit `CNAME`, `sitemap.xml` and canonical URLs together if you change the domain.
 - There is no form backend or live billing. Never collect payments or broker passwords on this GitHub Pages site.
 

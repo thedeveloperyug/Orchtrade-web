@@ -15,6 +15,9 @@ OrchTrade supports connected MetaTrader 5 account monitoring, portfolio analytic
 - [AI Trading Analysis & Portfolio Insights](https://orchtrade.com/ai-trading-analysis/): Research MT5 portfolio performance, AI-generated watch-only signals, trade setups and journal reviews with OrchTrade. No automatic execution or guaranteed returns.
 - [Forex & Gold Charts with AI Scan](https://orchtrade.com/forex-market-charts/): Explore OrchTrade's broker-sourced MT5 candlestick charts, multi-chart monitoring, timeframe switching and AI trade setup research on Advanced.
 
+## Contact and support
+- Email: orchstringsupport@gmail.com
+
 ## Legal
 - [Terms and Conditions](https://orchtrade.com/terms-and-conditions/)
 - [Risk and AI Disclaimer](https://orchtrade.com/disclaimer/)

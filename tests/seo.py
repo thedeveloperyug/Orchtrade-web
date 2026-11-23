@@ -48,3 +48,11 @@ for url in urls[3:]:
     assert 'href="'+urlsplit(url).path+'"' in home, url
 assert "User-agent: OAI-SearchBot" in (ROOT/"robots.txt").read_text()
 assert (ROOT/"llms.txt").is_file()
+
+# Keep public contact details consistent and do not expose the website source link.
+for url in urls:
+    html = (ROOT / urlsplit(url).path.strip("/") / "index.html").read_text()
+    assert "orchstringsupport@gmail.com" in html, url
+    assert "yogesh.pandey@orchstring.com" not in html, url
+    assert "Website GitHub" not in html, url
+print("PASS public support address and footer links")
