@@ -107,6 +107,18 @@ const files = new Map([
         assert.equal(await showcase.locator('[data-screen="0"]').getAttribute('aria-pressed'), 'true');
         assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.topbar')).backdropFilter), 'none');
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+        const comparison = page.locator('.plan-table');
+        assert.equal(await comparison.locator('tbody tr').count(), 13);
+        const access = async name => comparison.locator('tbody tr').filter({has:page.getByRole('rowheader',{name,exact:true})}).locator('td').evaluateAll(cells => cells.map(cell => cell.dataset.access === 'trial' ? cell.textContent.trim() : cell.dataset.access));
+        assert.deepEqual(await access('Backtests'), ['1 day','3 days','included']);
+        assert.deepEqual(await access('AI Insights'), ['1 day','included','included']);
+        assert.deepEqual(await access('Economic News'), ['included','included','included']);
+        assert.deepEqual(await access('Market Charts'), ['excluded','excluded','included']);
+        assert.deepEqual(await access('Signals'), ['excluded','excluded','included']);
+        for (const name of ['AI Backtesting & Strategy Assistant','AI Signals (watch-only)','AI Trade Scan / Setup Analysis','AI Journal Coach']) assert.deepEqual(await access(name), ['excluded','excluded','included']);
+        assert.equal(await comparison.getByRole('rowheader',{name:'Profile',exact:true}).count(),0);
+        assert.equal(await comparison.getByRole('rowheader',{name:'Billing',exact:true}).count(),0);
+        assert.ok(await comparison.evaluate(e=>{const r=e.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth+1;}));
         const annual = page.locator('[data-period="annual"]');
         await annual.click();
         assert.equal((await page.locator('[data-monthly="$12.99"]').textContent()).trim(), '$155.88');
