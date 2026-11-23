@@ -112,7 +112,9 @@ const files = new Map([
         const access = async name => comparison.locator('tbody tr').filter({has:page.getByRole('rowheader',{name,exact:true})}).locator('td').evaluateAll(cells => cells.map(cell => ['trial','limit'].includes(cell.dataset.access) ? cell.textContent.trim() : cell.dataset.access));
         assert.deepEqual(await access('Connected MT5 accounts'), ['1','2','2']);
         assert.deepEqual(await access('Priority customer care'), ['excluded','included','included']);
-        for(const name of ['Real-time charts with AI scan','Ultra-low-latency sync']) assert.deepEqual(await access(name), ['excluded','excluded','included']);
+        assert.deepEqual(await access('Real-time charts with AI scan'), ['excluded','excluded','included']);
+        assert.deepEqual(await access('Ultra-low-latency sync'), ['excluded','included','included']);
+        assert.ok((await page.locator('.price-card.highlighted .plan-list').textContent()).includes('Ultra-low-latency sync'));
         assert.deepEqual(await access('Backtests'), ['1 day','3 days','included']);
         assert.deepEqual(await access('AI Insights'), ['1 day','included','included']);
         assert.deepEqual(await access('Economic News'), ['included','included','included']);
