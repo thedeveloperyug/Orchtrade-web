@@ -56,3 +56,13 @@ for url in urls:
     assert "yogesh.pandey@orchstring.com" not in html, url
     assert "Website GitHub" not in html, url
 print("PASS public support address and footer links")
+
+# The exact supplied SVG and original 16/32/48-pixel ICO images must ship together.
+import hashlib
+assert hashlib.sha256((ROOT/"favicon.ico").read_bytes()).hexdigest() == "9dfe1bebcde3197c3d8a845284c50c428a6a23cee34c42bf00fc6afa2fd90eb5"
+assert (ROOT/"assets/orchtrade-ot-teal.svg").is_file()
+for url in urls:
+    html = (ROOT / urlsplit(url).path.strip("/") / "index.html").read_text()
+    assert html.count('src="/assets/orchtrade-ot-teal.svg"') >= 2, url
+    assert '/favicon.ico?v=ot-1' in html, url
+print("PASS new logo and favicon on every public page")

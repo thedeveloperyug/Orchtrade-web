@@ -15,6 +15,8 @@ const files = new Map([
   ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
   ['/site.js', ['site.js', 'text/javascript; charset=utf-8']],
   ['/favicon.svg', ['favicon.svg', 'image/svg+xml']],
+  ['/favicon.ico', ['favicon.ico', 'image/x-icon']],
+  ['/assets/orchtrade-ot-teal.svg', ['assets/orchtrade-ot-teal.svg', 'image/svg+xml']],
   ['/terms-and-conditions/', ['terms-and-conditions/index.html', 'text/html; charset=utf-8']],
   ['/disclaimer/', ['disclaimer/index.html', 'text/html; charset=utf-8']]
 ]);
@@ -54,6 +56,9 @@ const files = new Map([
         page.on('pageerror', e => errors.push(e.message));
         await page.goto(siteUrl, { waitUntil: 'domcontentloaded' });
         await page.locator('.dashboard').waitFor();
+        await page.locator('header .brand-mark').evaluate(img => img.decode());
+        assert.ok(await page.locator('header .brand-mark').evaluate(img => img.naturalWidth > 0));
+        assert.equal((await page.request.get(siteUrl + 'favicon.ico')).status(), 200);
         const state = await page.evaluate(() => {
           const rect = (selector) => {
             const e = document.querySelector(selector);

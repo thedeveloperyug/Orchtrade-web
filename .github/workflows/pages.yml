@@ -23,6 +23,8 @@ jobs:
           test -s styles.css
           test -s site.js
           test -s CNAME
+          test -s favicon.ico
+          test -s assets/orchtrade-ot-teal.svg
           grep -q '<html lang="en">' index.html
           grep -qx 'orchtrade.com' CNAME
           test -s terms-and-conditions/index.html
@@ -40,7 +42,7 @@ jobs:
       - name: Stage only static public assets
         run: |
           mkdir -p dist
-          cp index.html styles.css site.js favicon.svg CNAME robots.txt sitemap.xml llms.txt .nojekyll dist/
+          cp index.html styles.css site.js favicon.svg favicon.ico CNAME robots.txt sitemap.xml llms.txt .nojekyll dist/
           cp -R assets dist/
           cp -R mt5-account-monitoring trading-journal ai-backtesting ai-trading-analysis forex-market-charts dist/
           python3 - <<'PY'
