@@ -56,6 +56,12 @@ const files = new Map([
         page.on('pageerror', e => errors.push(e.message));
         await page.goto(siteUrl, { waitUntil: 'domcontentloaded' });
         await page.locator('.dashboard').waitFor();
+        const community = page.locator('#community');
+        assert.equal(await community.locator('a.discord-button').getAttribute('href'), 'https://discord.gg/Ed6ynZQQV');
+        assert.equal(await community.locator('.community-benefit').count(), 4);
+        assert.equal((await page.locator('.hero-gift').textContent()).trim(), 'A Trader to Trader Gift');
+        assert.ok(await community.locator('.community-card').evaluate(e => { const r=e.getBoundingClientRect(); return r.left>=-1 && r.right<=innerWidth+1 && e.scrollWidth<=e.clientWidth+1; }), 'Community card overflow at '+width);
+        assert.ok(await community.locator('a.discord-button').evaluate(e => e.getBoundingClientRect().height>=44), 'Discord button touch target');
         await page.locator('header .brand-mark').evaluate(img => img.decode());
         assert.ok(await page.locator('header .brand-mark').evaluate(img => img.naturalWidth > 0));
         assert.equal((await page.request.get(siteUrl + 'favicon.ico')).status(), 200);

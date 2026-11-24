@@ -66,3 +66,10 @@ for url in urls:
     assert html.count('src="/assets/orchtrade-ot-teal.svg"') >= 2, url
     assert '/favicon.ico?v=ot-1' in html, url
 print("PASS new logo and favicon on every public page")
+
+for url in urls:
+    html = (ROOT / urlsplit(url).path.strip("/") / "index.html").read_text()
+    assert 'href="https://discord.gg/Ed6ynZQQV"' in html, url
+assert "A Trader to Trader Gift" in home
+assert 'id="community"' in home
+print("PASS community links and hero tagline")

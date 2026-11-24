@@ -16,6 +16,7 @@ OrchTrade supports connected MetaTrader 5 account monitoring, portfolio analytic
 - [Forex & Gold Charts with AI Scan](https://orchtrade.com/forex-market-charts/): Explore OrchTrade's broker-sourced MT5 candlestick charts, multi-chart monitoring, timeframe switching and AI trade setup research on Advanced.
 
 ## Contact and support
+- [OrchTrade Discord community](https://discord.gg/Ed6ynZQQV): offers, product announcements, feature requests and support.
 - Email: orchstringsupport@gmail.com
 
 ## Legal
