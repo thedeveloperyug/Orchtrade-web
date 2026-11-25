@@ -129,7 +129,8 @@ const files = new Map([
         assert.deepEqual(await access('Backtests'), ['1 day','3 days','included']);
         assert.deepEqual(await access('AI Insights'), ['1 day','included','included']);
         assert.deepEqual(await access('Economic News'), ['included','included','included']);
-        assert.deepEqual(await access('Market Charts'), ['excluded','excluded','included']);
+        assert.deepEqual(await access('Market Charts'), ['3-day trial','15-day trial','included']);
+        assert.equal(await comparison.getByRole('row').filter({has:page.getByRole('rowheader',{name:'Market Charts',exact:true})}).getByText('Unlimited',{exact:true}).count(),1);
         assert.deepEqual(await access('Signals'), ['excluded','excluded','included']);
         for (const name of ['AI Backtesting & Strategy Assistant','AI Signals (watch-only)','AI Trade Scan / Setup Analysis','AI Journal Coach']) assert.deepEqual(await access(name), ['excluded','excluded','included']);
         assert.equal(await comparison.getByRole('rowheader',{name:'Profile',exact:true}).count(),0);
