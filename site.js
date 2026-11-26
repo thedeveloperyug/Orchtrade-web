@@ -60,6 +60,26 @@
     });
   });
 
+  var couponButton = document.querySelector('[data-copy-coupon]');
+  if (couponButton) {
+    couponButton.addEventListener('click', async function () {
+      var code = document.querySelector('#offer-code');
+      var status = document.querySelector('[data-coupon-status]');
+      try {
+        await navigator.clipboard.writeText(code.textContent.trim());
+        status.textContent = 'Coupon copied!';
+        couponButton.querySelector('[data-copy-label]').textContent = 'Copied';
+      } catch (_) {
+        var selection = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(code);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        status.textContent = 'Code selected. Copy it manually.';
+      }
+    });
+  }
+
   // No scroll listener or scroll hijacking. Pause slideshow offscreen or when tab is hidden.
   var showcase = document.querySelector('[data-showcase]');
   if (showcase) {

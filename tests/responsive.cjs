@@ -56,6 +56,18 @@ const files = new Map([
         page.on('pageerror', e => errors.push(e.message));
         await page.goto(siteUrl, { waitUntil: 'domcontentloaded' });
         await page.locator('.dashboard').waitFor();
+        const offer = page.locator('#special-offer');
+        assert.equal((await offer.locator('#offer-code').textContent()).trim(), 'YOGI');
+        assert.ok((await offer.locator('h3').textContent()).includes('50% OFF'));
+        assert.equal(await offer.locator('.coupon-claim').getAttribute('href'), '#pricing-options');
+        assert.ok(await offer.evaluate(e => { const r=e.getBoundingClientRect(); return r.left>=-1 && r.right<=innerWidth+1 && e.scrollWidth<=e.clientWidth+1; }), 'Offer card overflow at '+width);
+        assert.ok(await offer.locator('[data-copy-coupon]').evaluate(e => e.getBoundingClientRect().height>=44), 'Coupon button touch target');
+        if (width === 390) {
+          await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', {configurable:true,value:{writeText:async value=>{window.__couponCopy=value;}}}));
+          await offer.locator('[data-copy-coupon]').click();
+          assert.equal(await page.evaluate(()=>window.__couponCopy), 'YOGI');
+          assert.equal((await offer.locator('[data-coupon-status]').textContent()).trim(), 'Coupon copied!');
+        }
         const community = page.locator('#community');
         assert.equal(await community.locator('a.discord-button').getAttribute('href'), 'https://discord.gg/Ed6ynZQQV');
         assert.equal(await community.locator('.community-benefit').count(), 4);

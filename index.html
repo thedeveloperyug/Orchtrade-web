@@ -13,8 +13,8 @@
   <meta property="og:url" content="https://orchtrade.com/">
   <meta property="og:site_name" content="OrchTrade">
   <link rel="icon" href="/favicon.ico?v=ot-1" sizes="16x16 32x32 48x48" type="image/x-icon"><link rel="icon" href="/favicon.svg?v=ot-1" sizes="any" type="image/svg+xml">
-  <link rel="stylesheet" href="/styles.css?v=community-1">
-  <script src="/site.js?v=dark-showcase-1" defer></script>
+  <link rel="stylesheet" href="/styles.css?v=coupon-1">
+  <script src="/site.js?v=coupon-1" defer></script>
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="OrchTrade | MT5 Trading Journal, Portfolio Tracker &amp; AI Backtesting">
   <meta name="twitter:description" content="Monitor MT5 accounts, track trading performance, journal trades and explore AI backtesting, market charts and watch-only signals. Start with OrchTrade Free.">
@@ -154,7 +154,19 @@
 
     <section class="pricing section-pad" id="pricing"><div class="container">
       <div class="section-heading centered"><span class="eyebrow">PLANS THAT GROW WITH YOU</span><h2>Start simple.<br><em>Go deeper when you're ready.</em></h2><p>Every plan starts with the essentials. Add deeper AI-assisted research when you need it.</p></div>
-      <div class="billing-switch" role="group" aria-label="Billing period"><button type="button" class="active" data-period="monthly" aria-pressed="true">Monthly</button><button type="button" data-period="annual" aria-pressed="false">Yearly</button></div>
+      <aside class="coupon-card" id="special-offer" aria-labelledby="coupon-title">
+        <div class="coupon-copy">
+          <span class="coupon-kicker">A TRADER TO TRADER GIFT · SPECIAL OFFER</span>
+          <h3 id="coupon-title"><strong>50% OFF</strong> your eligible paid plan</h3>
+          <p>Apply coupon code <strong>YOGI</strong> at checkout to get a 50% discount on eligible purchases.</p>
+          <small>Coupon eligibility and final discounted price are confirmed at checkout.</small>
+        </div>
+        <div class="coupon-actions">
+          <div class="coupon-ticket"><span>COUPON CODE</span><div class="coupon-code-row"><code id="offer-code">YOGI</code><button type="button" class="coupon-copy-button" data-copy-coupon aria-label="Copy coupon code YOGI"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span data-copy-label>Copy code</span></button></div><span class="coupon-status" role="status" aria-live="polite" data-coupon-status></span></div>
+          <a class="btn btn-primary coupon-claim" href="#pricing-options">Choose your plan <span aria-hidden="true">↗</span></a>
+        </div>
+      </aside>
+      <div class="billing-switch" id="pricing-options" role="group" aria-label="Billing period"><button type="button" class="active" data-period="monthly" aria-pressed="true">Monthly</button><button type="button" data-period="annual" aria-pressed="false">Yearly</button></div>
       <div class="pricing-grid">
         <article class="price-card"><div class="plan-icon">◌</div><h3>Free</h3><p>All the basics, none of the noise.</p><div class="price-line"><strong data-monthly="$0" data-annual="$0">$0</strong><span data-period-label>/ month</span></div><p class="billing-hint">No payment required</p><a href="https://app.orchtrade.com/" class="btn btn-outline">Open free dashboard ↗</a><h4>What's included</h4><ul class="plan-list"><li>Connect 1 MT5 account</li><li>Dashboard &amp; live MT5 portfolio</li><li>Open Trades &amp; Journal</li><li>Economic News</li><li>Backtests — 1-day trial</li><li>AI Insights — 1-day trial</li><li>Market Charts — 3-day trial</li></ul></article>
         <article class="price-card highlighted"><span class="popular-tag">Most balanced</span><div class="plan-icon">✳</div><h3>Pro</h3><p>See the patterns behind your performance.</p><div class="price-line"><strong data-monthly="$12" data-annual="$144">$12</strong><del class="original-price" data-monthly="$20" data-annual="$240">$20</del><span data-period-label>/ month</span></div><p class="billing-hint"><span class="offer-tag">40% off</span> USD · Offer price</p><a href="https://app.orchtrade.com/?plan=pro&amp;period=monthly" class="btn btn-primary" data-checkout-link>Choose Pro ↗</a><h4>Everything in Free, with expanded access</h4><ul class="plan-list"><li>Connect up to 2 MT5 accounts</li><li>AI Insights — included throughout your plan</li><li>Backtests — 3-day trial</li><li>Market Charts — 15-day trial</li><li>Ultra-low-latency sync</li><li>Priority customer care</li></ul></article>

@@ -73,3 +73,6 @@ for url in urls:
 assert "A Trader to Trader Gift" in home
 assert 'id="community"' in home
 print("PASS community links and hero tagline")
+
+assert 'id="special-offer"' in home and '50% OFF' in home and 'id="offer-code">YOGI</code>' in home
+print("PASS special offer announcement")
